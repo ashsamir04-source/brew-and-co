@@ -7,9 +7,8 @@ const navLinks = [
 ];
 
 const hours = [
-  { days: "Monday – Friday", time: "7:00 AM – 6:00 PM" },
-  { days: "Saturday", time: "8:00 AM – 5:00 PM" },
-  { days: "Sunday", time: "9:00 AM – 4:00 PM" },
+  { days: "Monday – Friday", time: "6:00 AM – 8:00 PM" },
+  { days: "Saturday", time: "9:00 AM – 6:00 PM" },
 ];
 
 export default function Footer() {
