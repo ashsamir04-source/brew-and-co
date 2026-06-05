@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(node -e \"require\\('sharp'\\)\" 2>$null; $LASTEXITCODE)",
+      "PowerShell(Get-ChildItem \"C:\\\\Users\\\\ashra\\\\OneDrive\\\\Documents\\\\00 Business Plan\\\\01 Claude\\\\Udemy Master claude\\\\Brew-and-Co\\\\public\\\\images\" -ErrorAction SilentlyContinue | Select-Object Name, @{N='KB';E={[math]::Round\\($_.Length/1KB\\)}})",
+      "PowerShell(Get-ChildItem \"C:\\\\Users\\\\ashra\\\\OneDrive\\\\Documents\\\\00 Business Plan\\\\01 Claude\\\\Udemy Master claude\\\\Brew-and-Co\\\\public\\\\images\" | Sort-Object Name | Select-Object Name, @{N='KB';E={[math]::Round\\($_.Length/1KB\\)}})",
+      "PowerShell(Start-Sleep -Seconds 2; Invoke-WebRequest -Uri \"http://localhost:3000\" -UseBasicParsing 2>&1 | Select-Object StatusCode, StatusDescription; Start-Sleep -Seconds 2; Get-Content \"C:\\\\Users\\\\ashra\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\C--Users-ashra-OneDrive-Documents-00-Business-Plan-01-Claude-Udemy-Master-claude-Brew-and-Co\\\\7bc8fe64-c4e5-4fd2-81f8-9e4d44a2aadd\\\\tasks\\\\btl4uxuht.output\" | Select-Object -Last 30)",
+      "PowerShell(Invoke-WebRequest -Uri \"http://localhost:3000/menu\" -UseBasicParsing 2>&1 | Select-Object StatusCode; Invoke-WebRequest -Uri \"http://localhost:3000/about\" -UseBasicParsing 2>&1 | Select-Object StatusCode)"
+    ]
+  }
+}

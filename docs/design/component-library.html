@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brew & Co — Design System · Component Library</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --espresso-900: #1A0F0A; --espresso-800: #2E1A10; --espresso-700: #3D2416;
+      --espresso-600: #5C3620; --espresso-500: #7A4A2C; --espresso-400: #8B5E3C;
+      --espresso-300: #A67A58; --espresso-200: #C4A48A; --espresso-100: #E2CEBF;
+      --caramel-700: #A66428; --caramel-600: #BC7835; --caramel-500: #C4854A;
+      --caramel-400: #D4A065; --caramel-300: #E0B882; --caramel-200: #EDCFA6;
+      --caramel-100: #F5E5CC; --caramel-50: #FAF2E6;
+      --cream-50: #FAF6F2; --cream-100: #F5EDE3; --cream-200: #EDE0D4;
+      --cream-300: #E0DAD2; --cream-400: #CEC8BE; --cream-500: #B4AB9E;
+      --cream-600: #9C9183; --cream-700: #7A6E60;
+      --terracotta-700: #9A3A1C; --terracotta-500: #C96B46;
+      --terracotta-300: #E09A7E; --terracotta-100: #F5DDD4;
+      --honey-500: #D4A843; --honey-100: #F5EBCC; --honey-50: #FDF7E8;
+      --sage-700: #3E6040; --sage-500: #6B8C6B; --sage-100: #D4E4D4; --sage-50: #EEF5EE;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-sans: 'Outfit', system-ui, sans-serif;
+      --shadow-sm: 0 1px 3px rgba(26,15,10,.08);
+      --shadow-md: 0 4px 12px rgba(26,15,10,.10), 0 2px 4px rgba(26,15,10,.05);
+      --shadow-lg: 0 8px 24px rgba(26,15,10,.12), 0 4px 8px rgba(26,15,10,.06);
+      --shadow-xl: 0 16px 40px rgba(26,15,10,.14), 0 8px 16px rgba(26,15,10,.07);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-sans);
+      background: var(--cream-50);
+      color: var(--espresso-900);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      width: 220px; min-width: 220px;
+      background: var(--espresso-900);
+      position: sticky; top: 0; height: 100vh;
+      overflow-y: auto; display: flex; flex-direction: column; z-index: 100;
+    }
+    .sidebar-brand { padding: 32px 24px 24px; border-bottom: 1px solid rgba(245,237,227,.12); }
+    .sidebar-brand-name { font-family: var(--font-display); font-size: 22px; font-style: italic; font-weight: 600; color: var(--cream-50); line-height: 1.1; }
+    .sidebar-brand-sub { font-size: 10px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--caramel-300); margin-top: 6px; }
+    .sidebar-nav { padding: 16px 0; }
+    .sidebar-section-label { font-size: 9px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--cream-600); padding: 16px 24px 6px; }
+    .sidebar-link { display: flex; align-items: center; gap: 10px; padding: 8px 24px; font-size: 13px; color: var(--cream-400); text-decoration: none; transition: all 150ms ease; position: relative; }
+    .sidebar-link:hover, .sidebar-link.active { color: var(--cream-50); background: rgba(245,237,227,.06); }
+    .sidebar-link.active::before { content: ''; position: absolute; left: 0; top: 4px; bottom: 4px; width: 2px; background: var(--caramel-500); border-radius: 0 2px 2px 0; }
+    .sidebar-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; opacity: .4; flex-shrink: 0; }
+    .sidebar-link.active .sidebar-dot { opacity: 1; background: var(--caramel-500); }
+
+    /* MAIN */
+    .main { flex: 1; overflow-x: hidden; }
+
+    /* SECTION */
+    .section { padding: 64px; border-bottom: 1px solid rgba(26,15,10,.08); }
+    .section:nth-child(even) { background: var(--cream-100); }
+    .section-header { margin-bottom: 48px; }
+    .section-index { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--caramel-500); margin-bottom: 12px; display: flex; align-items: center; gap: 12px; }
+    .section-index::after { content: ''; flex: 1; max-width: 40px; height: 1px; background: var(--caramel-300); }
+    .section-title { font-family: var(--font-display); font-size: clamp(28px,3.5vw,42px); font-weight: 600; font-style: italic; color: var(--espresso-900); line-height: 1.1; margin-bottom: 10px; }
+    .section-desc { font-size: 14px; color: var(--espresso-600); max-width: 520px; line-height: 1.65; }
+
+    /* COMPONENT FRAME */
+    .component-frame { background: white; border-radius: 16px; border: 1px solid rgba(26,15,10,.08); overflow: hidden; margin-bottom: 32px; box-shadow: var(--shadow-sm); }
+    .component-frame-header { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; border-bottom: 1px solid rgba(26,15,10,.06); background: var(--cream-50); }
+    .component-name { font-size: 12px; font-weight: 600; color: var(--espresso-700); letter-spacing: 0.04em; }
+    .component-tag { font-size: 10px; font-weight: 600; letter-spacing: 0.10em; text-transform: uppercase; padding: 3px 10px; border-radius: 99px; background: var(--caramel-100); color: var(--caramel-700); }
+    .component-preview { padding: 40px; display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+    .component-preview.dark { background: var(--espresso-900); }
+    .component-preview.center { justify-content: center; }
+    .component-preview.column { flex-direction: column; align-items: flex-start; }
+    .component-code { padding: 16px 20px; background: var(--espresso-950, #0D0806); border-top: 1px solid rgba(255,255,255,.06); font-family: 'JetBrains Mono', monospace; font-size: 11.5px; color: var(--caramel-300); line-height: 1.6; overflow-x: auto; white-space: pre; }
+    .component-spec { padding: 16px 20px; background: var(--cream-50); border-top: 1px solid rgba(26,15,10,.06); }
+    .spec-row { display: flex; gap: 32px; flex-wrap: wrap; }
+    .spec-item { }
+    .spec-label { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cream-600); margin-bottom: 4px; }
+    .spec-value { font-size: 12px; color: var(--espresso-600); font-family: monospace; }
+
+    /* ── BUTTON COMPONENTS ────────────── */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 12px 24px; border-radius: 9999px; border: none; cursor: pointer;
+      font-family: var(--font-sans); font-size: 14px; font-weight: 600; line-height: 1;
+      letter-spacing: 0.01em; text-decoration: none;
+      transition: all 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
+      white-space: nowrap;
+    }
+    .btn:focus-visible { outline: 2px solid var(--caramel-500); outline-offset: 3px; }
+    .btn-primary { background: var(--caramel-500); color: var(--cream-50); }
+    .btn-primary:hover { background: var(--caramel-600); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(196,133,74,.40); }
+    .btn-primary:active { transform: translateY(0); box-shadow: none; }
+    .btn-dark { background: var(--espresso-900); color: var(--cream-50); }
+    .btn-dark:hover { background: var(--espresso-800); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(26,15,10,.35); }
+    .btn-outline { background: transparent; color: var(--caramel-600); border: 1.5px solid var(--caramel-400); }
+    .btn-outline:hover { background: var(--caramel-50); border-color: var(--caramel-500); transform: translateY(-1px); }
+    .btn-ghost { background: transparent; color: var(--espresso-700); }
+    .btn-ghost:hover { background: var(--cream-200); }
+    .btn-destructive { background: var(--terracotta-500); color: white; }
+    .btn-destructive:hover { background: var(--terracotta-700); transform: translateY(-1px); }
+    .btn-sm { padding: 8px 18px; font-size: 12px; }
+    .btn-lg { padding: 16px 36px; font-size: 16px; }
+    .btn-xl { padding: 18px 44px; font-size: 17px; }
+    .btn-icon { padding: 12px; width: 44px; height: 44px; }
+    .btn:disabled { opacity: 0.45; cursor: not-allowed; pointer-events: none; }
+    .btn-loading { position: relative; pointer-events: none; }
+    .btn-loading .spinner { width: 14px; height: 14px; border: 2px solid rgba(255,255,255,.3); border-top-color: white; border-radius: 50%; animation: spin 0.6s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── INPUT COMPONENTS ─────────────── */
+    .field { display: flex; flex-direction: column; gap: 6px; width: 100%; max-width: 320px; }
+    .field-label { font-size: 13px; font-weight: 600; color: var(--espresso-800); }
+    .field-hint { font-size: 12px; color: var(--cream-600); }
+    .field-error-msg { font-size: 12px; color: var(--terracotta-500); }
+    .input {
+      width: 100%; padding: 12px 16px; border-radius: 12px;
+      border: 1.5px solid rgba(26,15,10,.15); background: white;
+      font-family: var(--font-sans); font-size: 14px; color: var(--espresso-900);
+      transition: border-color 200ms ease, box-shadow 200ms ease;
+      outline: none;
+    }
+    .input::placeholder { color: var(--cream-500); }
+    .input:focus { border-color: var(--caramel-400); box-shadow: 0 0 0 3px rgba(196,133,74,.15); }
+    .input.error { border-color: var(--terracotta-500); }
+    .input.error:focus { box-shadow: 0 0 0 3px rgba(201,107,70,.15); }
+    .input:disabled { background: var(--cream-100); color: var(--cream-600); cursor: not-allowed; }
+    .input-group { position: relative; }
+    .input-icon { position: absolute; top: 50%; left: 14px; transform: translateY(-50%); color: var(--cream-500); pointer-events: none; }
+    .input-group .input { padding-left: 42px; }
+    .input-group .input-icon-right { left: auto; right: 14px; }
+    .textarea { min-height: 100px; resize: vertical; }
+    .select-wrapper { position: relative; }
+    .select-wrapper select {
+      width: 100%; padding: 12px 40px 12px 16px; border-radius: 12px;
+      border: 1.5px solid rgba(26,15,10,.15); background: white;
+      font-family: var(--font-sans); font-size: 14px; color: var(--espresso-900);
+      appearance: none; cursor: pointer; outline: none;
+      transition: border-color 200ms ease;
+    }
+    .select-wrapper select:focus { border-color: var(--caramel-400); box-shadow: 0 0 0 3px rgba(196,133,74,.15); }
+    .select-arrow { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); pointer-events: none; color: var(--espresso-400); }
+
+    /* ── CHECKBOX & RADIO ──────────────── */
+    .check-group { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+    .check-group input[type="checkbox"], .check-group input[type="radio"] { width: 18px; height: 18px; accent-color: var(--caramel-500); cursor: pointer; }
+    .check-label { font-size: 14px; color: var(--espresso-800); font-weight: 500; }
+
+    /* ── CARD COMPONENTS ──────────────── */
+    .product-card {
+      background: white; border-radius: 20px; overflow: hidden;
+      box-shadow: var(--shadow-md);
+      transition: transform 250ms cubic-bezier(0.34,1.56,0.64,1), box-shadow 250ms ease;
+      width: 220px;
+    }
+    .product-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+    .product-card-img {
+      height: 180px; background: var(--cream-100);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 56px; position: relative; overflow: hidden;
+    }
+    .product-card-img::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+      height: 60px; background: linear-gradient(transparent, rgba(245,237,227,.6));
+    }
+    .product-card-circle {
+      width: 120px; height: 120px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 56px; transition: transform 300ms ease;
+    }
+    .product-card:hover .product-card-circle { transform: scale(1.06) rotate(-3deg); }
+    .product-card-body { padding: 16px 20px 20px; }
+    .product-card-category { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--caramel-400); margin-bottom: 6px; }
+    .product-card-name { font-family: var(--font-display); font-size: 20px; font-weight: 600; color: var(--espresso-900); line-height: 1.2; margin-bottom: 8px; }
+    .product-card-desc { font-size: 12px; color: var(--espresso-500); line-height: 1.5; margin-bottom: 16px; }
+    .product-card-footer { display: flex; align-items: center; justify-content: space-between; }
+    .product-price { font-family: var(--font-display); font-size: 22px; font-weight: 700; color: var(--caramel-600); }
+    .product-price-original { font-size: 13px; color: var(--cream-500); text-decoration: line-through; margin-left: 6px; }
+    .add-btn {
+      width: 36px; height: 36px; border-radius: 50%; background: var(--caramel-500);
+      border: none; cursor: pointer; display: flex; align-items: center; justify-content: center;
+      color: white; font-size: 20px; line-height: 1;
+      transition: all 200ms cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .add-btn:hover { background: var(--caramel-600); transform: scale(1.12); }
+
+    /* Category Card */
+    .category-card {
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      padding: 20px 16px; background: white; border-radius: 16px;
+      border: 1.5px solid rgba(26,15,10,.08); cursor: pointer;
+      transition: all 200ms ease; min-width: 100px;
+      text-decoration: none;
+    }
+    .category-card:hover { border-color: var(--caramel-400); box-shadow: var(--shadow-md); transform: translateY(-2px); }
+    .category-card.active { border-color: var(--caramel-500); background: var(--caramel-50); }
+    .category-icon { width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; }
+    .category-name { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--espresso-700); }
+    .category-card.active .category-name { color: var(--caramel-700); }
+
+    /* Feature Card */
+    .feature-card {
+      border-radius: 20px; padding: 36px; background: var(--espresso-900);
+      color: var(--cream-50); position: relative; overflow: hidden;
+    }
+    .feature-card::before {
+      content: ''; position: absolute;
+      inset: 0; background: radial-gradient(ellipse 60% 80% at 100% 0%, rgba(196,133,74,.2) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .feature-card-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--caramel-400); margin-bottom: 12px; }
+    .feature-card-title { font-family: var(--font-display); font-size: 32px; font-style: italic; font-weight: 600; color: var(--cream-50); margin-bottom: 12px; line-height: 1.15; }
+    .feature-card-desc { font-size: 14px; color: var(--cream-500); line-height: 1.65; margin-bottom: 24px; max-width: 320px; }
+
+    /* Testimonial Card */
+    .testimonial-card {
+      background: white; border-radius: 20px; padding: 28px;
+      box-shadow: var(--shadow-md); max-width: 360px;
+    }
+    .testimonial-stars { display: flex; gap: 3px; margin-bottom: 14px; color: var(--honey-500); font-size: 16px; }
+    .testimonial-text { font-family: var(--font-display); font-size: 18px; font-style: italic; font-weight: 400; color: var(--espresso-800); line-height: 1.6; margin-bottom: 20px; }
+    .testimonial-author { display: flex; align-items: center; gap: 12px; }
+    .testimonial-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--caramel-200); display: flex; align-items: center; justify-content: center; font-size: 16px; }
+    .testimonial-name { font-size: 13px; font-weight: 600; color: var(--espresso-800); }
+    .testimonial-role { font-size: 12px; color: var(--cream-600); margin-top: 1px; }
+
+    /* ── BADGES & TAGS ────────────────── */
+    .badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 4px 12px; border-radius: 99px;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+    }
+    .badge-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+    .badge-brand    { background: var(--caramel-100);    color: var(--caramel-700);    }
+    .badge-new      { background: var(--honey-100);      color: #7A5010;               }
+    .badge-popular  { background: var(--terracotta-100); color: var(--terracotta-700); }
+    .badge-organic  { background: var(--sage-100);       color: var(--sage-700);       }
+    .badge-dark     { background: var(--espresso-900);   color: var(--cream-100);      }
+    .badge-limited  { background: var(--espresso-800);   color: var(--caramel-300);    }
+    .badge-outline  { background: transparent; border: 1.5px solid var(--caramel-400); color: var(--caramel-600); }
+    .badge-lg       { font-size: 12px; padding: 6px 16px; }
+    .dietary-tag    { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; border-radius: 8px; font-size: 12px; font-weight: 600; border: 1px solid; }
+    .dietary-vegan  { background: var(--sage-50); color: var(--sage-700); border-color: var(--sage-100); }
+    .dietary-gf     { background: var(--honey-50); color: #7A5010; border-color: var(--honey-100); }
+    .dietary-hot    { background: var(--terracotta-100); color: var(--terracotta-700); border-color: var(--terracotta-300); }
+
+    /* ── NAVIGATION ───────────────────── */
+    .navbar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 32px; height: 68px; background: white;
+      border-bottom: 1px solid rgba(26,15,10,.08);
+      box-shadow: var(--shadow-sm);
+    }
+    .navbar-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .navbar-logo { font-family: var(--font-display); font-size: 22px; font-style: italic; font-weight: 600; color: var(--espresso-900); }
+    .navbar-logo span { color: var(--caramel-500); }
+    .navbar-links { display: flex; align-items: center; gap: 4px; }
+    .nav-link { padding: 8px 16px; border-radius: 8px; font-size: 14px; font-weight: 500; color: var(--espresso-600); text-decoration: none; transition: all 150ms ease; }
+    .nav-link:hover { color: var(--espresso-900); background: var(--cream-100); }
+    .nav-link.active { color: var(--caramel-600); font-weight: 600; }
+    .navbar-actions { display: flex; align-items: center; gap: 12px; }
+    .search-pill {
+      display: flex; align-items: center; gap: 8px;
+      padding: 8px 14px; border-radius: 99px;
+      background: var(--cream-100); border: 1px solid rgba(26,15,10,.10);
+      font-size: 13px; color: var(--cream-600); cursor: pointer;
+      transition: all 150ms ease; min-width: 160px;
+    }
+    .search-pill:hover { border-color: rgba(26,15,10,.20); background: var(--cream-200); }
+
+    /* Dark navbar variant */
+    .navbar-dark { background: var(--espresso-900); border-color: rgba(245,237,227,.10); }
+    .navbar-dark .navbar-logo { color: var(--cream-50); }
+    .navbar-dark .nav-link { color: var(--cream-400); }
+    .navbar-dark .nav-link:hover { color: var(--cream-50); background: rgba(245,237,227,.08); }
+    .navbar-dark .nav-link.active { color: var(--caramel-400); }
+    .navbar-dark .search-pill { background: rgba(245,237,227,.08); border-color: rgba(245,237,227,.15); color: var(--cream-500); }
+
+    /* Breadcrumb */
+    .breadcrumb { display: flex; align-items: center; gap: 8px; }
+    .breadcrumb-item { font-size: 13px; color: var(--cream-600); text-decoration: none; transition: color 150ms ease; }
+    .breadcrumb-item:hover { color: var(--espresso-700); }
+    .breadcrumb-sep { color: var(--cream-400); font-size: 12px; }
+    .breadcrumb-item.current { color: var(--espresso-800); font-weight: 600; pointer-events: none; }
+
+    /* ── ALERTS ───────────────────────── */
+    .alert {
+      display: flex; gap: 14px; align-items: flex-start;
+      padding: 16px 20px; border-radius: 12px; border: 1px solid;
+      max-width: 480px;
+    }
+    .alert-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+    .alert-body { flex: 1; }
+    .alert-title { font-size: 14px; font-weight: 700; margin-bottom: 3px; }
+    .alert-desc { font-size: 13px; line-height: 1.5; }
+    .alert-success { background: var(--sage-50); border-color: var(--sage-100); color: var(--sage-700); }
+    .alert-warning { background: var(--honey-50); border-color: var(--honey-100); color: #7A5010; }
+    .alert-error   { background: var(--terracotta-100); border-color: var(--terracotta-300); color: var(--terracotta-700); }
+    .alert-info    { background: var(--caramel-50); border-color: var(--caramel-100); color: var(--caramel-700); }
+
+    /* ── TOAST ────────────────────────── */
+    .toast {
+      display: flex; align-items: center; gap: 12px;
+      padding: 14px 18px; border-radius: 14px;
+      background: var(--espresso-900); color: var(--cream-50);
+      box-shadow: var(--shadow-xl); max-width: 360px;
+    }
+    .toast-icon { font-size: 18px; flex-shrink: 0; }
+    .toast-body { flex: 1; }
+    .toast-title { font-size: 14px; font-weight: 600; }
+    .toast-desc { font-size: 12px; color: var(--cream-500); margin-top: 2px; }
+    .toast-close { font-size: 18px; color: var(--cream-500); cursor: pointer; flex-shrink: 0; line-height: 1; }
+    .toast-close:hover { color: var(--cream-100); }
+
+    /* ── PRICE DISPLAY ────────────────── */
+    .price-display { display: flex; align-items: baseline; gap: 6px; }
+    .price-current { font-family: var(--font-display); font-size: 28px; font-weight: 700; color: var(--caramel-600); }
+    .price-original { font-size: 16px; color: var(--cream-500); text-decoration: line-through; }
+    .price-discount { font-size: 12px; font-weight: 700; background: var(--terracotta-100); color: var(--terracotta-700); padding: 3px 8px; border-radius: 6px; margin-left: 2px; }
+
+    /* ── RATING ───────────────────────── */
+    .rating { display: flex; align-items: center; gap: 4px; }
+    .star { font-size: 16px; color: var(--honey-500); }
+    .star.empty { color: var(--cream-300); }
+    .rating-count { font-size: 13px; color: var(--cream-600); margin-left: 4px; }
+
+    /* ── QUANTITY STEPPER ─────────────── */
+    .stepper { display: flex; align-items: center; gap: 0; border: 1.5px solid rgba(26,15,10,.15); border-radius: 99px; overflow: hidden; }
+    .stepper-btn { width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; background: none; border: none; cursor: pointer; font-size: 18px; color: var(--espresso-700); transition: background 150ms ease; }
+    .stepper-btn:hover { background: var(--cream-100); }
+    .stepper-value { min-width: 36px; text-align: center; font-size: 14px; font-weight: 600; color: var(--espresso-900); }
+
+    /* ── SKELETON ──────────────────────── */
+    .skeleton { background: linear-gradient(90deg, var(--cream-200) 25%, var(--cream-100) 50%, var(--cream-200) 75%); background-size: 400px 100%; animation: shimmer 1.4s ease-in-out infinite; border-radius: 6px; }
+    @keyframes shimmer { 0% { background-position: -400px 0; } 100% { background-position: 400px 0; } }
+
+    /* ── MENU LIST ─────────────────────── */
+    .menu-item {
+      display: flex; align-items: center; gap: 16px;
+      padding: 16px 0; border-bottom: 1px solid rgba(26,15,10,.06);
+    }
+    .menu-item:last-child { border-bottom: none; }
+    .menu-item-img { width: 64px; height: 64px; border-radius: 12px; background: var(--cream-200); display: flex; align-items: center; justify-content: center; font-size: 28px; flex-shrink: 0; }
+    .menu-item-info { flex: 1; }
+    .menu-item-name { font-size: 15px; font-weight: 600; color: var(--espresso-900); margin-bottom: 4px; }
+    .menu-item-desc { font-size: 12px; color: var(--espresso-500); line-height: 1.4; }
+    .menu-item-price { font-family: var(--font-display); font-size: 20px; font-weight: 700; color: var(--caramel-600); flex-shrink: 0; }
+
+    /* UTILITIES */
+    .divider { height: 1px; background: linear-gradient(to right, transparent, rgba(26,15,10,.10), transparent); margin: 32px 0; }
+    code { font-family: 'JetBrains Mono', monospace; font-size: 12px; background: var(--cream-200); color: var(--caramel-700); padding: 2px 6px; border-radius: 4px; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    @media (max-width: 900px) {
+      .sidebar { display: none; }
+      .section { padding: 40px 24px; }
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    }
+
+    /* SVG Icons */
+    .icon { display: inline-block; vertical-align: middle; }
+  </style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-brand-name">Brew & Co</div>
+    <div class="sidebar-brand-sub">Component Library</div>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="sidebar-section-label">Interactive</div>
+    <a href="#buttons" class="sidebar-link active"><span class="sidebar-dot"></span> Buttons</a>
+    <a href="#forms" class="sidebar-link"><span class="sidebar-dot"></span> Form Elements</a>
+    <a href="#stepper" class="sidebar-link"><span class="sidebar-dot"></span> Stepper & Controls</a>
+    <div class="sidebar-section-label">Display</div>
+    <a href="#cards" class="sidebar-link"><span class="sidebar-dot"></span> Cards</a>
+    <a href="#navigation" class="sidebar-link"><span class="sidebar-dot"></span> Navigation</a>
+    <a href="#badges" class="sidebar-link"><span class="sidebar-dot"></span> Badges & Tags</a>
+    <a href="#alerts" class="sidebar-link"><span class="sidebar-dot"></span> Alerts & Toasts</a>
+    <a href="#menu" class="sidebar-link"><span class="sidebar-dot"></span> Menu List</a>
+    <a href="#data" class="sidebar-link"><span class="sidebar-dot"></span> Data Display</a>
+    <div class="sidebar-section-label">References</div>
+    <a href="style-guide.html" class="sidebar-link"><span class="sidebar-dot"></span> Style Guide →</a>
+  </nav>
+</aside>
+
+<main class="main">
+
+  <!-- HEADER -->
+  <div style="background:var(--espresso-900);padding:48px 64px;position:relative;overflow:hidden">
+    <div style="position:absolute;inset:0;background:radial-gradient(ellipse 50% 80% at 90% 50%,rgba(196,133,74,.15) 0%,transparent 70%);pointer-events:none"></div>
+    <div style="font-size:11px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--caramel-400);margin-bottom:16px;display:flex;align-items:center;gap:12px">
+      <span style="display:inline-block;width:32px;height:1px;background:var(--caramel-500)"></span>
+      Component Library
+    </div>
+    <h1 style="font-family:var(--font-display);font-size:clamp(40px,6vw,72px);font-style:italic;font-weight:600;color:var(--cream-50);line-height:1;margin-bottom:16px">UI Components</h1>
+    <p style="font-size:15px;color:var(--cream-500);max-width:460px;line-height:1.7">
+      All components built for Next.js 16 + Tailwind CSS v4. Each component shows multiple states, variants, Tailwind class patterns, and usage specs.
+    </p>
+  </div>
+
+  <!-- ── SECTION: BUTTONS ──────────────────────────────── -->
+  <section id="buttons" class="section">
+    <div class="section-header">
+      <div class="section-index">01 — Interactive</div>
+      <h2 class="section-title">Buttons</h2>
+      <p class="section-desc">Five variants covering every interaction context. All use pill shape (<code>rounded-full</code>) and spring easing for a responsive, physical feel.</p>
+    </div>
+
+    <!-- Variants -->
+    <div class="component-frame">
+      <div class="component-frame-header">
+        <span class="component-name">Button Variants</span>
+        <span class="component-tag">Interactive</span>
+      </div>
+      <div class="component-preview">
+        <button class="btn btn-primary">Order Now</button>
+        <button class="btn btn-dark">Explore Menu</button>
+        <button class="btn btn-outline">View All</button>
+        <button class="btn btn-ghost">Learn More</button>
+        <button class="btn btn-destructive">Remove Item</button>
+      </div>
+      <div class="component-code"><!-- Primary -->
+&lt;button class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-caramel-500 text-cream-50 text-sm font-semibold
+               transition-all duration-normal ease-spring hover:bg-caramel-600 hover:-translate-y-px
+               hover:shadow-[0_6px_20px_rgba(196,133,74,.40)]"&gt;
+  Order Now
+&lt;/button&gt;
+
+<!-- Dark -->
+&lt;button class="... bg-espresso-900 text-cream-50 hover:bg-espresso-800"&gt;Explore Menu&lt;/button&gt;
+
+<!-- Outline -->
+&lt;button class="... bg-transparent text-caramel-600 border border-caramel-400 hover:bg-caramel-50"&gt;View All&lt;/button&gt;
+
+<!-- Ghost -->
+&lt;button class="... bg-transparent text-espresso-700 hover:bg-cream-200"&gt;Learn More&lt;/button&gt;</div>
+      <div class="component-spec">
+        <div class="spec-row">
+          <div class="spec-item"><div class="spec-label">Height (md)</div><div class="spec-value">44px · py-3 px-6</div></div>
+          <div class="spec-item"><div class="spec-label">Radius</div><div class="spec-value">rounded-full (9999px)</div></div>
+          <div class="spec-item"><div class="spec-label">Font</div><div class="spec-value">text-sm font-semibold</div></div>
+          <div class="spec-item"><div class="spec-label">Transition</div><div class="spec-value">duration-normal ease-spring</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sizes -->
+    <div class="component-frame">
+      <div class="component-frame-header">
+        <span class="component-name">Button Sizes</span>
+        <span class="component-tag">Variants</span>
+      </div>
+      <div class="component-preview" style="align-items:center">
+        <button class="btn btn-primary btn-sm">Small</button>
+        <button class="btn btn-primary">Medium (default)</button>
+        <button class="btn btn-primary btn-lg">Large</button>
+        <button class="btn btn-primary btn-xl">Extra Large</button>
+      </div>
+      <div class="component-code"><!-- sm: py-2 px-[18px] text-xs -->
+<!-- md: py-3 px-6 text-sm (default) -->
+<!-- lg: py-4 px-9 text-base -->
+<!-- xl: py-[18px] px-11 text-lg --></div>
+      <div class="component-spec">
+        <div class="spec-row">
+          <div class="spec-item"><div class="spec-label">sm</div><div class="spec-value">32px · text-xs</div></div>
+          <div class="spec-item"><div class="spec-label">md (default)</div><div class="spec-value">44px · text-sm</div></div>
+          <div class="spec-item"><div class="spec-label">lg</div><div class="spec-value">52px · text-base</div></div>
+          <div class="spec-item"><div class="spec-label">xl</div><div class="spec-value">56px · text-lg</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- States -->
+    <div class="component-frame">
+      <div class="component-frame-header">
+        <span class="component-name">Button States</span>
+        <span class="component-tag">States</span>
+      </div>
+      <div class="component-preview">
+        <button class="btn btn-primary">Default</button>
+        <button class="btn btn-primary" style="background:var(--caramel-600);transform:translateY(-1px);box-shadow:0 6px 20px rgba(196,133,74,.40)">Hover</button>
+        <button class="btn btn-primary" style="outline:2px solid var(--caramel-500);outline-offset:3px">Focused</button>
+        <button class="btn btn-primary btn-loading">
+          <div class="spinner"></div>
+          Adding to cart...
+        </button>
+        <button class="btn btn-primary" disabled>Disabled</button>
+      </div>
+    </div>
+
+    <!-- With Icons -->
+    <div class="component-frame">
+      <div class="component-frame-header">
+        <span class="component-name">Buttons with Icons</span>
+        <span class="component-tag">Variants</span>
+      </div>
+      <div class="component-preview">
+        <button class="btn btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+          Add to Cart
+        </button>
+        <button class="btn btn-dark">
+          Get Promo
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+        <button class="btn btn-outline btn-icon" title="Search">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </button>
+        <button class="btn btn-ghost btn-icon" title="Favourite">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SECTION: FORMS ─────────────────────────────────── -->
+  <section id="forms" class="section">
+    <div class="section-header">
+      <div class="section-index">02 — Interactive</div>
+      <h2 class="section-title">Form Elements</h2>
+      <p class="section-desc">Inputs use generous padding and <code>rounded-md</code> (12px) for an approachable, readable feel. Focus states use the caramel ring.</p>
+    </div>
+
+    <div class="grid-2">
+      <!-- Text inputs -->
+      <div class="component-frame">
+        <div class="component-frame-header">
+          <span class="component-name">Text Input — States</span>
+          <span class="component-tag">Form</span>
+        </div>
+        <div class="component-preview column">
+          <div class="field">
+            <label class="field-label">Your Name</label>
+            <input class="input" type="text" placeholder="Jane Smith">
+            <span class="field-hint">As it appears on your order.</span>
+          </div>
+          <div class="field">
+            <label class="field-label">Email Address</label>
+            <input class="input" type="email" placeholder="hello@example.com" style="border-color:var(--caramel-400);box-shadow:0 0 0 3px rgba(196,133,74,.15)">
+            <span class="field-hint" style="color:var(--caramel-600)">Focus state active</span>
+          </div>
+          <div class="field">
+            <label class="field-label" style="color:var(--terracotta-600)">Promo Code</label>
+            <input class="input error" type="text" value="BREWCO99">
+            <span class="field-error-msg">❌ This code has expired.</span>
+          </div>
+          <div class="field">
+            <label class="field-label" style="opacity:.5">Phone Number</label>
+            <input class="input" type="tel" placeholder="+1 (555) 000-0000" disabled>
+            <span class="field-hint">Disabled state</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Search, Select, Textarea -->
+      <div class="component-frame">
+        <div class="component-frame-header">
+          <span class="component-name">Search · Select · Textarea</span>
+          <span class="component-tag">Form</span>
+        </div>
+        <div class="component-preview column">
+          <div class="field">
+            <label class="field-label">Search Menu</label>
+            <div class="input-group">
+              <svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input class="input" type="search" placeholder="Try 'caramel latte'…">
+            </div>
+          </div>
+          <div class="field">
+            <label class="field-label">Order Type</label>
+            <div class="select-wrapper">
+              <select>
+                <option>Dine In</option>
+                <option>Takeaway</option>
+                <option>Delivery</option>
+              </select>
+              <svg class="select-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+            </div>
+          </div>
+          <div class="field">
+            <label class="field-label">Special Instructions</label>
+            <textarea class="input textarea" placeholder="Any dietary requirements or special requests…"></textarea>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <label class="check-group">
+              <input type="checkbox" checked>
+              <span class="check-label">Oat milk (no extra charge)</span>
+            </label>
+            <label class="check-group">
+              <input type="checkbox">
+              <span class="check-label">Add extra shot</span>
+            </label>
+            <label class="check-group">
+              <input type="radio" name="size" checked>
+              <span class="check-label">Regular (12oz)</span>
+            </label>
+            <label class="check-group">
+              <input type="radio" name="size">
+              <span class="check-label">Large (16oz) +$1.50</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="component-code" style="border-radius:12px;overflow:hidden;margin-top:0"><!-- Text input pattern -->
+&lt;div class="flex flex-col gap-1.5"&gt;
+  &lt;label class="text-sm font-semibold text-espresso-800"&gt;Your Name&lt;/label&gt;
+  &lt;input
+    class="w-full px-4 py-3 rounded-md border border-espresso-900/15 bg-white text-sm text-espresso-900
+           placeholder:text-cream-500 outline-none transition-all duration-fast
+           focus:border-caramel-400 focus:ring-[3px] focus:ring-caramel-500/15
+           disabled:bg-cream-100 disabled:text-cream-600 disabled:cursor-not-allowed"
+    type="text"
+    placeholder="Jane Smith"
+  /&gt;
+  &lt;span class="text-xs text-cream-600"&gt;As it appears on your order.&lt;/span&gt;
+&lt;/div&gt;</div>
+  </section>
+
+  <!-- ── SECTION: STEPPER ────────────────────────────────── -->
+  <section id="stepper" class="section">
+    <div class="section-header">
+      <div class="section-index">03 — Interactive</div>
+      <h2 class="section-title">Stepper & Controls</h2>
+    </div>
+    <div class="component-frame">
+      <div class="component-frame-header">
+        <span class="component-name">Quantity Stepper</span>
+        <span class="component-tag">Control</span>
+      </div>
+      <div class="component-preview" style="gap:32px">
+        <div class="stepper">
+          <button class="stepper-btn">−</button>
+          <span class="stepper-value">1</span>
+          <button class="stepper-btn">+</button>
+        </div>
+        <div class="stepper">
+          <button class="stepper-btn">−</button>
+          <span class="stepper-value">3</span>
+          <button class="stepper-btn">+</button>
+        </div>
+        <div class="price-display">
+          <span class="price-current">$30.00</span>
+          <span class="price-original">$40.00</span>
+          <span class="price-discount">−25%</span>
+        </div>
+      </div>
+    </div>
+    <div class="component-frame" style="margin-top:24px">
+      <div class="component-frame-header">
+        <span class="component-name">Rating Display</span>
+        <span class="component-tag">Display</span>
+      </div>
+      <div class="component-preview" style="gap:32px;flex-wrap:wrap">
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div class="rating">
+            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+            <span class="rating-count">5.0 (248 reviews)</span>
+          </div>
+          <div class="rating">
+            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star empty">★</span>
+            <span class="rating-count">4.0 (91 reviews)</span>
+          </div>
+          <div class="rating">
+            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star empty">★</span><span class="star empty">★</span>
+            <span class="rating-count">3.2 (17 reviews)</span>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div class="skeleton" style="height:16px;width:180px"></div>
+          <div class="skeleton" style="height:12px;width:140px"></div>
+          <div class="skeleton" style="height:80px;width:220px;border-radius:12px"></div>
+          <div style="font-size:11px;font-weight:600;letter-spacing:.10em;text-transform:uppercase;color:var(--cream-600);margin-top:4px">Skeleton loading state</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SECTION: CARDS ─────────────────────────────────── -->
+  <section id="cards" class="section">
+    <div class="section-header">
+      <div class="section-index">04 — Display</div>
+      <h2 class="section-title">Cards</h2>
+      <p class="section-desc">Product cards lead with visual appetite appeal. Category cards use circular icons matching the reference design. Feature cards create editorial drama.</p>
+    </div>
+
+    <!-- Product Cards -->
+    <div class="component-frame">
+      <div class="component-frame-header">
+        <span class="component-name">Product Card</span>
+        <span class="component-tag">Commerce</span>
+      </div>
+      <div class="component-preview" style="gap:24px;flex-wrap:wrap">
+        <!-- Card 1 -->
+        <div class="product-card">
+          <div class="product-card-img">
+            <div class="product-card-circle" style="background:var(--terracotta-100)">☕</div>
+          </div>
+          <div class="product-card-body">
+            <div class="product-card-category">Coffee</div>
+            <div class="product-card-name">Caramel Flat White</div>
+            <div class="product-card-desc">Silky microfoam, double ristretto, house caramel drizzle.</div>
+            <div class="product-card-footer">
+              <div>
+                <span class="product-price">$8.50</span>
+              </div>
+              <button class="add-btn">+</button>
+            </div>
+          </div>
+        </div>
+        <!-- Card 2 -->
+        <div class="product-card">
+          <div class="product-card-img" style="background:var(--honey-100)">
+            <div class="product-card-circle" style="background:var(--honey-100)">🧋</div>
+          </div>
+          <div class="product-card-body">
+            <div class="product-card-category">Drinks</div>
+            <div class="product-card-name">Nutella Mudslide</div>
+            <div class="product-card-desc">Rich, indulgent blend of espresso, hazelnut, and dark chocolate.</div>
+            <div class="product-card-footer">
+              <div>
+                <span class="product-price">$12.00</span>
+                <span class="product-price-original">$15.00</span>
+              </div>
+              <button class="add-btn">+</button>
+            </div>
+          </div>
+        </div>
+        <!-- Card 3 -->
+        <div class="product-card">
+          <div class="product-card-img" style="background:var(--sage-100)">
+            <div class="product-card-circle" style="background:var(--sage-100)">🍵</div>
+          </div>
+          <div class="product-card-body">
+            <div class="product-card-category">Tea</div>
+            <div class="product-card-name">Matcha Latte</div>
+            <div class="product-card-desc">Ceremonial grade matcha, oat milk, light honey.</div>
+            <div class="product-card-footer">
+              <span class="product-price">$7.00</span>
+              <button class="add-btn">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="component-code">import Image from 'next/image'
+
+export function ProductCard({ name, category, description, price, originalPrice, emoji, bgColor }) {
+  return (
+    &lt;div className="w-[220px] bg-white rounded-[20px] overflow-hidden shadow-warm-md
+                    transition-all duration-normal ease-spring hover:-translate-y-1 hover:shadow-warm-lg"&gt;
+      &lt;div className="h-[180px] flex items-center justify-center" style={{ background: bgColor }}&gt;
+        &lt;div className="w-[120px] h-[120px] rounded-full flex items-center justify-center text-[56px]
+                        transition-transform duration-slow hover:scale-[1.06] hover:-rotate-3"&gt;
+          {emoji}
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div className="p-5"&gt;
+        &lt;div className="text-[10px] font-bold tracking-widest uppercase text-caramel-400 mb-1.5"&gt;{category}&lt;/div&gt;
+        &lt;h3 className="font-display text-xl font-semibold text-espresso-900 mb-2"&gt;{name}&lt;/h3&gt;
+        &lt;p className="text-xs text-espresso-500 leading-relaxed mb-4"&gt;{description}&lt;/p&gt;
+        &lt;div className="flex items-center justify-between"&gt;
+          &lt;div&gt;
+            &lt;span className="font-display text-[22px] font-bold text-caramel-600"&gt;${price}&lt;/span&gt;
+            {originalPrice &amp;&amp; &lt;span className="text-sm text-cream-500 line-through ml-1.5"&gt;${originalPrice}&lt;/span&gt;}
+          &lt;/div&gt;
+          &lt;button className="w-9 h-9 rounded-full bg-caramel-500 text-white text-xl flex items-center justify-center
+                             border-none cursor-pointer transition-all ease-spring hover:bg-caramel-600 hover:scale-[1.12]"&gt;
+            +
+          &lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  )
+}</div>
+    </div>
+
+    <!-- Category Cards -->
+    <div class="component-frame">
+      <div class="component-frame-header">
+        <span class="component-name">Category Cards</span>
+        <span class="component-tag">Navigation</span>
+      </div>
+      <div class="component-preview" style="gap:16px;flex-wrap:wrap">
+        <a class="category-card active" href="#">
+          <div class="category-icon" style="background:var(--caramel-200)">☕</div>
+          <span class="category-name">Coffee</span>
+        </a>
+        <a class="category-card" href="#">
+          <div class="category-icon" style="background:#1A5F5F;color:white">🥤</div>
+          <span class="category-name">Drinks</span>
+        </a>
+        <a class="category-card" href="#">
+          <div class="category-icon" style="background:var(--terracotta-500);color:white">🍵</div>
+          <span class="category-name">Tea</span>
+        </a>
+        <a class="category-card" href="#">
+          <div class="category-icon" style="background:var(--honey-100)">🧁</div>
+          <span class="category-name">Bakery</span>
+        </a>
+        <a class="category-card" href="#">
+          <div class="category-icon" style="background:var(--sage-100)">🌿</div>
+          <span class="category-name">Organic</span>
+        </a>
+      </div>
+      <div class="component-code">&lt;a href="/menu/coffee"
+  className="flex flex-col items-center gap-2.5 px-4 py-5 bg-white rounded-2xl
+             border-[1.5px] border-espresso-900/8 cursor-pointer text-decoration-none
+             transition-all duration-normal ease-out
+             hover:border-caramel-400 hover:shadow-warm-md hover:-translate-y-0.5
+             aria-current-page:border-caramel-500 aria-current-page:bg-caramel-50"&gt;
+  &lt;div className="w-[52px] h-[52px] rounded-full bg-caramel-200 flex items-center justify-center text-2xl"&gt;☕&lt;/div&gt;
+  &lt;span className="text-[11px] font-bold tracking-[.08em] uppercase text-espresso-700"&gt;Coffee&lt;/span&gt;
+&lt;/a&gt;</div>
+    </div>
+
+    <!-- Feature + Testimonial -->
+    <div class="grid-2" style="margin-top:24px">
+      <div class="component-frame">
+        <div class="component-frame-header"><span class="component-name">Feature Card</span><span class="component-tag">Editorial</span></div>
+        <div class="component-preview" style="padding:0;display:block">
+          <div style="padding:32px">
+            <div class="feature-card">
+              <div class="feature-card-eyebrow">Today's Special</div>
+              <div class="feature-card-title">Ethiopian<br>Single Origin</div>
+              <div class="feature-card-desc">Bright, fruity notes of blueberry and jasmine. Light roast, perfect for pour-over or Chemex.</div>
+              <button class="btn btn-primary">Add to Cart — $14.00</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="component-frame">
+        <div class="component-frame-header"><span class="component-name">Testimonial Card</span><span class="component-tag">Social Proof</span></div>
+        <div class="component-preview" style="padding:32px;display:block">
+          <div class="testimonial-card">
+            <div class="testimonial-stars">★★★★★</div>
+            <div class="testimonial-text">"Best flat white in the city. The caramel is perfect — not too sweet, just right. My morning ritual."</div>
+            <div class="testimonial-author">
+              <div class="testimonial-avatar">👩</div>
+              <div>
+                <div class="testimonial-name">Sarah Mitchell</div>
+                <div class="testimonial-role">Regular since 2022</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SECTION: NAVIGATION ────────────────────────────── -->
+  <section id="navigation" class="section">
+    <div class="section-header">
+      <div class="section-index">05 — Display</div>
+      <h2 class="section-title">Navigation</h2>
+    </div>
+
+    <!-- Light Navbar -->
+    <div class="component-frame">
+      <div class="component-frame-header"><span class="component-name">Navbar — Light</span><span class="component-tag">Navigation</span></div>
+      <div class="component-preview" style="padding:0;display:block">
+        <nav class="navbar">
+          <a class="navbar-brand" href="#">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M17 8C8 10 5.9 16.17 3.82 22H5.71C6.04 21 6.4 20 6.8 19H17C21 19 21 15 21 15V6C21 6 17 6 17 8Z" fill="var(--caramel-500)"/><path d="M17 8H6C6 8 3 9 3 12C3 14 4 15 6 15H7C7 15 7 16 8 16C8 16 17 16 17 16" stroke="var(--espresso-900)" stroke-width="1.5" fill="none"/></svg>
+            <span class="navbar-logo">Brew <span>&</span> Co</span>
+          </a>
+          <div class="navbar-links">
+            <a class="nav-link active" href="#">Home</a>
+            <a class="nav-link" href="#">Menu</a>
+            <a class="nav-link" href="#">About</a>
+            <a class="nav-link" href="#">Blog</a>
+          </div>
+          <div class="navbar-actions">
+            <div class="search-pill">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              Search…
+            </div>
+            <button class="btn btn-primary btn-sm">Order Now</button>
+          </div>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Dark Navbar -->
+    <div class="component-frame" style="margin-top:24px">
+      <div class="component-frame-header"><span class="component-name">Navbar — Dark</span><span class="component-tag">Navigation</span></div>
+      <div class="component-preview" style="padding:0;display:block;background:var(--espresso-950)">
+        <nav class="navbar navbar-dark">
+          <a class="navbar-brand" href="#">
+            <span class="navbar-logo">Brew <span>& Co</span></span>
+          </a>
+          <div class="navbar-links">
+            <a class="nav-link" href="#">Home</a>
+            <a class="nav-link active" href="#">Menu</a>
+            <a class="nav-link" href="#">About</a>
+            <a class="nav-link" href="#">Blog</a>
+          </div>
+          <div class="navbar-actions">
+            <div class="search-pill">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              Search…
+            </div>
+            <button class="btn btn-primary btn-sm">Order Now</button>
+          </div>
+        </nav>
+      </div>
+    </div>
+
+    <!-- Breadcrumb -->
+    <div class="component-frame" style="margin-top:24px">
+      <div class="component-frame-header"><span class="component-name">Breadcrumb</span><span class="component-tag">Navigation</span></div>
+      <div class="component-preview">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a class="breadcrumb-item" href="#">Home</a>
+          <span class="breadcrumb-sep">›</span>
+          <a class="breadcrumb-item" href="#">Menu</a>
+          <span class="breadcrumb-sep">›</span>
+          <a class="breadcrumb-item" href="#">Coffee</a>
+          <span class="breadcrumb-sep">›</span>
+          <span class="breadcrumb-item current" aria-current="page">Caramel Flat White</span>
+        </nav>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SECTION: BADGES ────────────────────────────────── -->
+  <section id="badges" class="section">
+    <div class="section-header">
+      <div class="section-index">06 — Display</div>
+      <h2 class="section-title">Badges & Tags</h2>
+    </div>
+    <div class="component-frame">
+      <div class="component-frame-header"><span class="component-name">Badge Variants</span><span class="component-tag">Label</span></div>
+      <div class="component-preview" style="flex-wrap:wrap;gap:10px">
+        <span class="badge badge-brand"><span class="badge-dot"></span>Featured</span>
+        <span class="badge badge-new">New</span>
+        <span class="badge badge-popular"><span class="badge-dot"></span>Popular</span>
+        <span class="badge badge-organic">Organic</span>
+        <span class="badge badge-dark">Seasonal</span>
+        <span class="badge badge-limited">Limited Run</span>
+        <span class="badge badge-outline">Coming Soon</span>
+        <span class="badge badge-brand badge-lg">Staff Pick ✦</span>
+      </div>
+    </div>
+    <div class="component-frame" style="margin-top:24px">
+      <div class="component-frame-header"><span class="component-name">Dietary Tags</span><span class="component-tag">Label</span></div>
+      <div class="component-preview" style="flex-wrap:wrap;gap:10px">
+        <span class="dietary-tag dietary-vegan">🌱 Vegan</span>
+        <span class="dietary-tag dietary-gf">🌾 Gluten Free</span>
+        <span class="dietary-tag dietary-hot">🌶 Spicy</span>
+        <span class="dietary-tag dietary-vegan">☕ Caffeine Free</span>
+        <span class="dietary-tag dietary-gf">🥛 Dairy Free</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SECTION: ALERTS ────────────────────────────────── -->
+  <section id="alerts" class="section">
+    <div class="section-header">
+      <div class="section-index">07 — Feedback</div>
+      <h2 class="section-title">Alerts & Toasts</h2>
+    </div>
+    <div class="component-frame">
+      <div class="component-frame-header"><span class="component-name">Alert Variants</span><span class="component-tag">Feedback</span></div>
+      <div class="component-preview column" style="gap:16px">
+        <div class="alert alert-success">
+          <span class="alert-icon">✅</span>
+          <div class="alert-body"><div class="alert-title">Order Confirmed!</div><div class="alert-desc">Your Caramel Flat White will be ready in 4 minutes. Order #B204.</div></div>
+        </div>
+        <div class="alert alert-warning">
+          <span class="alert-icon">⚠️</span>
+          <div class="alert-body"><div class="alert-title">Almost Out</div><div class="alert-desc">Ethiopian Single Origin — only 3 portions remaining today.</div></div>
+        </div>
+        <div class="alert alert-error">
+          <span class="alert-icon">❌</span>
+          <div class="alert-body"><div class="alert-title">Payment Failed</div><div class="alert-desc">Your card was declined. Please check your details and try again.</div></div>
+        </div>
+        <div class="alert alert-info">
+          <span class="alert-icon">ℹ️</span>
+          <div class="alert-body"><div class="alert-title">New Hours This Week</div><div class="alert-desc">We open an hour earlier — from 6:30am — all this week.</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="component-frame" style="margin-top:24px">
+      <div class="component-frame-header"><span class="component-name">Toast Notifications</span><span class="component-tag">Feedback</span></div>
+      <div class="component-preview column" style="background:var(--cream-200);gap:16px">
+        <div class="toast">
+          <span class="toast-icon">☕</span>
+          <div class="toast-body">
+            <div class="toast-title">Added to your order</div>
+            <div class="toast-desc">Caramel Flat White × 1</div>
+          </div>
+          <span class="toast-close">×</span>
+        </div>
+        <div class="toast" style="background:var(--sage-700)">
+          <span class="toast-icon">✓</span>
+          <div class="toast-body">
+            <div class="toast-title" style="color:var(--sage-100)">Order ready for pickup</div>
+            <div class="toast-desc" style="color:var(--sage-300)">Please collect at the counter — Order #B204</div>
+          </div>
+          <span class="toast-close" style="color:var(--sage-300)">×</span>
+        </div>
+      </div>
+      <div class="component-code">// In app — using a toast library like react-hot-toast or sonner:
+toast.custom(() => (
+  &lt;div className="flex items-center gap-3 px-[18px] py-3.5 rounded-2xl
+                  bg-espresso-900 text-cream-50 shadow-warm-xl max-w-[360px]"&gt;
+    &lt;span className="text-lg flex-shrink-0"&gt;☕&lt;/span&gt;
+    &lt;div className="flex-1"&gt;
+      &lt;div className="text-sm font-semibold"&gt;Added to your order&lt;/div&gt;
+      &lt;div className="text-xs text-cream-500 mt-0.5"&gt;Caramel Flat White × 1&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;button className="text-cream-500 hover:text-cream-100 text-lg leading-none"&gt;×&lt;/button&gt;
+  &lt;/div&gt;
+))</div>
+    </div>
+  </section>
+
+  <!-- ── SECTION: MENU LIST ─────────────────────────────── -->
+  <section id="menu" class="section">
+    <div class="section-header">
+      <div class="section-index">08 — Display</div>
+      <h2 class="section-title">Menu List</h2>
+    </div>
+    <div class="component-frame">
+      <div class="component-frame-header"><span class="component-name">Menu Item Row</span><span class="component-tag">Commerce</span></div>
+      <div class="component-preview column" style="padding:24px 32px">
+        <div class="menu-item">
+          <div class="menu-item-img">☕</div>
+          <div class="menu-item-info">
+            <div class="menu-item-name">Caramel Flat White</div>
+            <div class="menu-item-desc">Double ristretto, silky oat milk, house caramel drizzle.</div>
+            <div style="margin-top:6px;display:flex;gap:6px">
+              <span class="badge badge-popular" style="font-size:9px;padding:2px 8px">Popular</span>
+              <span class="dietary-tag dietary-vegan" style="padding:2px 8px;font-size:10px">🌱 Vegan</span>
+            </div>
+          </div>
+          <span class="menu-item-price">$8.50</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-img">🧋</div>
+          <div class="menu-item-info">
+            <div class="menu-item-name">Nutella Mudslide</div>
+            <div class="menu-item-desc">Espresso, hazelnut praline, dark chocolate, whipped cream.</div>
+            <div style="margin-top:6px">
+              <span class="badge badge-new" style="font-size:9px;padding:2px 8px">New</span>
+            </div>
+          </div>
+          <span class="menu-item-price">$12.00</span>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-img">🍵</div>
+          <div class="menu-item-info">
+            <div class="menu-item-name">Ceremonial Matcha</div>
+            <div class="menu-item-desc">Grade-A Japanese matcha, oat milk, light agave.</div>
+          </div>
+          <span class="menu-item-price">$7.00</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SECTION: DATA DISPLAY ─────────────────────────── -->
+  <section id="data" class="section">
+    <div class="section-header">
+      <div class="section-index">09 — Display</div>
+      <h2 class="section-title">Data Display</h2>
+    </div>
+    <div class="grid-2">
+      <div class="component-frame">
+        <div class="component-frame-header"><span class="component-name">Stat Cards</span><span class="component-tag">Dashboard</span></div>
+        <div class="component-preview" style="flex-wrap:wrap;gap:16px">
+          <div style="background:var(--cream-50);border-radius:14px;padding:20px;min-width:130px;border:1px solid rgba(26,15,10,.08)">
+            <div style="font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--cream-600);margin-bottom:8px">Today's Orders</div>
+            <div style="font-family:var(--font-display);font-size:36px;font-weight:700;color:var(--espresso-900);line-height:1">248</div>
+            <div style="font-size:12px;color:var(--sage-500);margin-top:6px;font-weight:600">↑ 12% vs yesterday</div>
+          </div>
+          <div style="background:var(--caramel-500);border-radius:14px;padding:20px;min-width:130px">
+            <div style="font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--caramel-200);margin-bottom:8px">Revenue</div>
+            <div style="font-family:var(--font-display);font-size:36px;font-weight:700;color:white;line-height:1">$2,104</div>
+            <div style="font-size:12px;color:var(--caramel-100);margin-top:6px;font-weight:600">↑ 8% this week</div>
+          </div>
+        </div>
+      </div>
+      <div class="component-frame">
+        <div class="component-frame-header"><span class="component-name">Order Summary</span><span class="component-tag">Commerce</span></div>
+        <div class="component-preview column" style="padding:24px 32px">
+          <div style="display:flex;flex-direction:column;gap:12px;width:100%">
+            <div style="display:flex;justify-content:space-between;font-size:14px;color:var(--espresso-700)">
+              <span>Caramel Flat White × 2</span><span style="font-weight:600">$17.00</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:14px;color:var(--espresso-700)">
+              <span>Matcha Latte × 1</span><span style="font-weight:600">$7.00</span>
+            </div>
+            <div style="height:1px;background:rgba(26,15,10,.08)"></div>
+            <div style="display:flex;justify-content:space-between;font-size:14px;color:var(--espresso-600)">
+              <span>Promo (BREW10)</span><span style="color:var(--sage-600);font-weight:600">−$2.40</span>
+            </div>
+            <div style="height:1px;background:rgba(26,15,10,.08)"></div>
+            <div style="display:flex;justify-content:space-between;align-items:baseline">
+              <span style="font-size:14px;font-weight:600;color:var(--espresso-800)">Total</span>
+              <span style="font-family:var(--font-display);font-size:26px;font-weight:700;color:var(--caramel-600)">$21.60</span>
+            </div>
+            <button class="btn btn-primary" style="width:100%;margin-top:4px">Confirm Order</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <div style="padding:40px 64px;background:var(--espresso-900);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px">
+    <div>
+      <div style="font-family:var(--font-display);font-size:20px;font-style:italic;font-weight:600;color:var(--cream-100)">Brew & Co Design System</div>
+      <div style="font-size:12px;color:var(--cream-600);margin-top:4px">Component Library · v1.0.0</div>
+    </div>
+    <div style="display:flex;gap:24px">
+      <a href="style-guide.html" style="font-size:13px;font-weight:500;color:var(--caramel-400);text-decoration:none">Style Guide →</a>
+      <a href="tokens.css" style="font-size:13px;font-weight:500;color:var(--caramel-400);text-decoration:none">tokens.css →</a>
+    </div>
+  </div>
+
+</main>
+
+<script>
+  const sections = document.querySelectorAll('section[id]');
+  const links = document.querySelectorAll('.sidebar-link[href^="#"]');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        links.forEach(l => l.classList.remove('active'));
+        const active = document.querySelector(`.sidebar-link[href="#${entry.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
